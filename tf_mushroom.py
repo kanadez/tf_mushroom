@@ -61,13 +61,17 @@ def prepare_data(data_file_name):
 	df_test.to_csv('test_temp.csv', index=False)
 
 	# Пишем количества в тренировочный файл, затем в тестовый
-	open("mushroom_train.csv", "w").write(str(num_train_entries) +
-	"," + str(num_train_features) +
-	"," + open("train_temp.csv").read())
+	with open("mushroom_train.csv", "w") as mushroom_train:
+		with open("train_temp.csv") as train_temp:
+			mushroom_train.write(str(num_train_entries) +
+			"," + str(num_train_features) +
+			"," + train_temp.read())
 
-	open("mushroom_test.csv", "w").write(str(num_test_entries) +
-	"," + str(num_test_features) +
-	"," + open("test_temp.csv").read())
+	with open("mushroom_test.csv", "w") as mushroom_test:
+		with open("test_temp.csv") as test_temp:
+			mushroom_test.write(str(num_test_entries) +
+			"," + str(num_test_features) +
+			"," + test_temp.read())
 
 	# Удаляем временные файлы, они больше не нужны
 	os.remove("train_temp.csv")
